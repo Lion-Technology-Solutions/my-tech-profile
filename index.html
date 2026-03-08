@@ -50,4 +50,67 @@
     </footer>
 </body>
 </html>
-demo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LionTech Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        .result { margin-top: 1rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to LionTech</h1>
+
+    <!-- registration form -->
+    <form id="registrationForm">
+        <label>
+            Full name:
+            <input type="text" name="name" required>
+        </label><br><br>
+        <label>
+            Email:
+            <input type="email" name="email" required>
+        </label><br><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <div id="confirmation" class="result"></div>
+
+    <script>
+        // simple student number generator
+        function getNextStudentNumber() {
+            const key = 'liontechStudentCounter';
+            let counter = parseInt(localStorage.getItem(key) || '0', 10);
+            counter += 1;
+            localStorage.setItem(key, counter);
+            // format e.g. LT-0001
+            return 'LT-' + counter.toString().padStart(4, '0');
+        }
+
+        document.getElementById('registrationForm')
+            .addEventListener('submit', function (e) {
+                e.preventDefault();
+                const form = e.target;
+                const name = form.name.value.trim();
+                const email = form.email.value.trim();
+
+                if (!name || !email) {
+                    return; // HTML required attributes should catch this
+                }
+
+                const studentNumber = getNextStudentNumber();
+
+                // display confirmation
+                const conf = document.getElementById('confirmation');
+                conf.textContent =
+                    `Thank you, ${name}! Your student number is ${studentNumber}.`;
+
+                // optionally clear the form
+                form.reset();
+            });
+    </script>
+</body>
+</html>
